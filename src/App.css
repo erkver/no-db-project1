@@ -1,0 +1,83 @@
+/* <link rel="stylesheet"href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"crossorigin="anonymous"> */
+
+/* 070707-28231c-513b3c-655356-c1eeff */
+
+*{
+  box-sizing: border-box;
+}
+
+body {
+  background: #28231c;
+  color: #c1eeff;
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 128px;
+  height: 25vh;
+  position: relative;
+}
+
+input {
+  width: 20vw;
+  height: 7.5vh;
+  border-radius: 10px;
+  background-color: #655356;
+  color: #c1eeff;
+  border: solid .5px #c1eeff;
+  padding: 10px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.search-button {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+button {
+  width: 10vw;
+  height: 7.5vh;
+  border-radius: 10px;
+  background-color: #c1eeff;
+  color: #655356;
+  border: solid .5px #c1eeff;
+}
+.App {
+  text-align: center;
+}
+
+.list-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  position: relative;
+  width: 30%;
+  margin: 10px;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+}
+
+img {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  width: 50%;
+  margin: 5px;
+}
+
