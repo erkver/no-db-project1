@@ -9,11 +9,8 @@ app.use(bodyParser.json());
 
 
 app.get('/api/breweries', breweryCtrl.getBreweries);
-
-
-// app.post('/api/messages', messages_controller.create);
-// app.get('/api/messages', messages_controller.get);
-// app.put('/api/messages/:id', messages_controller.update);
-// app.delete('/api/messages/:id', messages_controller.delete);
+// app.get(`/api/breweries?by_name=`, breweryCtrl.filterBreweries);
+app.post('/api/breweries', breweryCtrl.createBrewery);
+app.delete('/api/breweries/:id', breweryCtrl.deleteBrewery);
 
 app.listen(port, () => (console.log(`Server is listening on port ${port}`)));
