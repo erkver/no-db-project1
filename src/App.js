@@ -57,7 +57,7 @@ class App extends Component {
 
   editBrewery(id, text) {
 
-  }rd
+  }
 
   toggleForm(id) {
     let singleBrewery = this.state.breweries.filter(brewery => brewery.id === id)
