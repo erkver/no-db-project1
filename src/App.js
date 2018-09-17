@@ -6,9 +6,6 @@ import List from './components/List'
 import Input from './components/Input';
 import Form from "./components/Form";
 
-
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +14,8 @@ class App extends Component {
       visited: [],
       toggle: false,
       visitedToggle: false,
-      editComment: ""
+      editComment: "",
+      visitedText: "Been Here!"
     }
     this.addBrewery = this.addBrewery.bind(this);
     this.removeBrewery = this.removeBrewery.bind(this);
@@ -25,6 +23,7 @@ class App extends Component {
     this.editBrewery = this.editBrewery.bind(this);
     this.searchBrewery = this.searchBrewery.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleVisitedToggle = this.handleVisitedToggle.bind(this);
     this.addToVisited = this.addToVisited.bind(this);
     this.handleComment = this.handleComment.bind(this);
     this.findByState = this.findByState.bind(this);
@@ -76,15 +75,18 @@ class App extends Component {
   addToVisited(brewery){
     let visitedArr = this.state.visited.slice();
     visitedArr.push(brewery);
-    this.setState({visited: visitedArr});
+    this.setState({visited: visitedArr, visitedText: "Added!"});
   }
 
   handleToggle(){
     this.setState({toggle: !this.state.toggle});
   }
   
-  handleVisitedToggle(){
-    this.setState({toggle: !this.state.visitedToggle});
+  handleVisitedToggle(id){
+    let toggleInd = this.state.breweries.findIndex(brewery => brewery.id === id);
+    let breweriesCopy = this.state.breweries.slice();
+    breweriesCopy[toggleInd] = this.setState({visitedToggle: !this.state.visitedToggle});
+    this.state.visitedToggle === false ? this.setState({visitedText: "Been Here!"}) : this.setState({visitedText: "Added!"})
   }
 
   handleComment(e) {
@@ -94,33 +96,35 @@ class App extends Component {
   render() {
     // console.log(this.state.breweries)
     const { breweries, visited } = this.state;
-    let breweryList = breweries.map((e, desc, location, site) => {
+    let breweryList = breweries.map((e, ind) => {
       return (
         <List 
-          key1={desc}
-          key2={location}
-          key3={site}
+          key={ind}
           brewery={e}
           deleteBrewery={this.removeBrewery}
           editBrewery={this.editBrewery}
           addBrewery={this.addToVisited}
           handleComment={this.handleComment}
           updatedComment={this.state.editComment}
+          toggle={this.handleVisitedToggle}
+          toggleState={this.state.visitedToggle}
+          visitedText={this.state.visitedText}
         />
       )
       });
-    let visitedList = visited.map((e, desc, location, site) => {
+    let visitedList = visited.map((e, ind) => {
       return (
         <List 
-          key1={desc}
-          key2={location}
-          key3={site}
+          key={ind}
           brewery={e}
           deleteBrewery={this.removeBrewery}
           editBrewery={this.editBrewery}
           addBrewery={this.addToVisited}
           handleComment={this.handleComment}
           updatedComment={this.state.editComment}
+          toggle={this.handleVisitedToggle}
+          toggleState={this.state.visitedToggle}
+          visitedText={this.state.visitedText}
         />
       )
       });

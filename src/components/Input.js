@@ -19,7 +19,6 @@ class Input extends Component {
         this.setState({nameInput: e.target.value});
     }
 
-
     handleStateChange(e) {
         this.setState({stateInput: e.target.value});
     }
@@ -33,7 +32,6 @@ class Input extends Component {
         this.props.state(this.state.stateInput);
         this.setState({stateInput: ""});
     }
-
 
     render() {
         return (
