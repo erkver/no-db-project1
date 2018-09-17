@@ -8,6 +8,7 @@ import Form from "./components/Form";
 
 
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,7 @@ class App extends Component {
       breweries: [],
       visited: [],
       toggle: false,
+      visitedToggle: false,
       editComment: ""
     }
     this.addBrewery = this.addBrewery.bind(this);
@@ -25,6 +27,7 @@ class App extends Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.addToVisited = this.addToVisited.bind(this);
     this.handleComment = this.handleComment.bind(this);
+    this.findByState = this.findByState.bind(this);
   }
 
   componentDidMount() {
@@ -56,30 +59,41 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  searchBrewery(str) { 
-    axios.get(`/api/breweries?by_state=${str}`).then(res => {
-            // let filteredBreweries = res.data.filter(brewery => brewery.name.includes(searchStr))
+  searchBrewery(str) {
+    console.log(str); 
+    axios.get(`/api/breweriesSearch?by_name=${str}`).then(res => {
       this.setState({breweries: res.data});
     }).catch(err => console.log(err));
+  }
+
+  findByState(state) {
+    console.log(state); 
+    axios.get(`/api/breweriesState?by_state=${state}`).then(res => {
+      this.setState({breweries: res.data});
+    }).catch(err => console.log(err));
+  }
+
+  addToVisited(brewery){
+    let visitedArr = this.state.visited.slice();
+    visitedArr.push(brewery);
+    this.setState({visited: visitedArr});
   }
 
   handleToggle(){
     this.setState({toggle: !this.state.toggle});
   }
-
-  addToVisited(brewery){
-    let visitedArr = this.state.visited.slice();;
-    visitedArr.push(brewery);
-    this.setState({visited: visitedArr});
+  
+  handleVisitedToggle(){
+    this.setState({toggle: !this.state.visitedToggle});
   }
 
   handleComment(e) {
-    this.setState({editComment: e.target.value})
+    this.setState({editComment: e.target.value});
   }
 
   render() {
     // console.log(this.state.breweries)
-    const { breweries } = this.state;
+    const { breweries, visited } = this.state;
     let breweryList = breweries.map((e, desc, location, site) => {
       return (
         <List 
@@ -95,7 +109,7 @@ class App extends Component {
         />
       )
       });
-    let visitedList = this.state.visited.map((e, desc, location, site) => {
+    let visitedList = visited.map((e, desc, location, site) => {
       return (
         <List 
           key1={desc}
@@ -113,10 +127,6 @@ class App extends Component {
     return (
       <div className="App">
         <div className="navBar">
-          <Input 
-            search={this.searchBrewery}
-            switchToVisited={this.handleToggle}
-          />
           <button className="visited-button" onClick={() => this.handleToggle()}>{this.state.toggle === false ? "View visited breweries" : "Back to list"}</button>
         </div>
           <nav>
@@ -124,15 +134,17 @@ class App extends Component {
           </nav>
           {this.state.toggle === false ? 
             <div className="form-container">
-            <div className="pre-body">
-              <p className="alt-text">Filter by:</p>
-              <button>State</button>
-            </div>
-            <p 
-              className="alt-text">or add a new brewery!</p>
-            <Form
-              addBrewery={this.addBrewery}
-            />
+              <div className="pre-body">
+                <p className="alt-text">Filter by:</p>
+                  <Input 
+                    search={this.searchBrewery}
+                    state={this.findByState}
+                  />
+              </div>
+              <p className="alt-text">or add a new brewery!</p>
+              <Form
+                addBrewery={this.addBrewery}
+              />
             </div> : 
             <p id="visited">Visited breweries</p>
           }

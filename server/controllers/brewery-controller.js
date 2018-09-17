@@ -12,15 +12,25 @@ module.exports = {
             res.status(200).json(breweries);
         })
     },
-    filterBreweries: (req, res) => {
-        console.log(req.query.by_state);
-        if(req.query.by_state){
-        axios.get('https://api.openbrewerydb.org/breweries?by_state=texas&per_page=50').then(response => {
-            breweries = response.data;
-            response.status(200).json(breweries);
-        })
+    filterBreweries: (req, res, next) => {
+        console.log(req.query.by_name);
+        if(req.query.by_name){
+            axios.get('https://api.openbrewerydb.org/breweries?by_name=' + req.query.by_name).then(response => {
+                breweries = response.data;
+                res.status(200).json(breweries);
+                next();
+            })
         }
-        res.status.json(breweries);
+    },
+    findByState: (req, res, next) => {
+        console.log(req.query.by_state);
+        if (req.query.by_state) {
+            axios.get('https://api.openbrewerydb.org/breweries?by_state=' + req.query.by_state).then(response => {
+                breweries = response.data;
+                res.status(200).json(breweries);
+                next();
+            })
+        }
     },
     createBrewery: (req, res) => {
         const { name, brewery_type, city, state, website_url, comment } = req.body;
@@ -45,7 +55,7 @@ module.exports = {
         return res.status(200).json(breweries);
     },
     editBrewery: (req, res) => {
-        // console.log(req.params.id, req.body.text);
+        console.log(req.params.id, req.body.text);
         const { text } = req.body;
         const editID = req.params.id;
         const editIndex = breweries.findIndex(brewery => brewery.id == editID);

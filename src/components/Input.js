@@ -1,25 +1,37 @@
 import React,{ Component } from "react";
 import '../App.css';
 import Button from "./Button";
-import axios from "axios";
 
 class Input extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInput: ""
+            nameInput: "",
+            stateInput: ""
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleStateChange = this.handleStateChange.bind(this);
+        this.handleNameClick = this.handleNameClick.bind(this);
+        this.handleStateClick = this.handleStateClick.bind(this);
     }
 
-    handleChange(e) {
-        // console.log(this.state.userInput);v
-        this.setState({userInput: e.target.value});
+    handleNameChange(e) {
+        this.setState({nameInput: e.target.value});
     }
 
-    handleClick() {
-        this.props.search(this.state.userInput);
+
+    handleStateChange(e) {
+        this.setState({stateInput: e.target.value});
+    }
+
+    handleNameClick() {
+        this.props.search(this.state.nameInput);
+        this.setState({nameInput: ""});
+    }
+
+    handleStateClick() {
+        this.props.state(this.state.stateInput);
+        this.setState({stateInput: ""});
     }
 
 
@@ -27,13 +39,25 @@ class Input extends Component {
         return (
             <div className="input">
                 <input 
-                    placeholder="Find a brewery by state" 
-                    value={this.state.userInput} 
-                    onChange={this.handleChange}
+                    placeholder="Find a brewery by name" 
+                    value={this.state.nameInput} 
+                    onChange={this.handleNameChange}
                 />
                 <Button 
-                    handleSubmit={() => this.handleClick}
+                    handleNameSubmit={this.handleNameClick}
+                    nameInput={this.state.nameInput}
+                    handleStateSubmit={this.handleStateClick}
+                    stateInput={this.state.stateInput}
                 />
+                <input 
+                    placeholder="Find a brewery by state" 
+                    value={this.state.stateInput} 
+                    onChange={this.handleStateChange}
+                />
+                <button
+                    className="search-button"                     
+                    onClick={() => this.handleStateClick(this.state.stateInput)}>Submit
+                </button> 
             </div>
         );
     }

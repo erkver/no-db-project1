@@ -9,7 +9,7 @@ const List = props => {
             <div className="list">{props.brewery.name} - {props.brewery.brewery_type}</div>
             <div className="list">{props.brewery.city}, {props.brewery.state}</div>
             <div className="list">{props.brewery.website_url}</div>
-            <div className="list">{props.brewery.comment}</div>
+            <div className="list">Comment/Notes: {props.brewery.comment}</div>
             <div className="list-buttons">
                 <button onClick={() => props.deleteBrewery(props.brewery.id)}>Delete brewery</button>
                 <button 
@@ -21,12 +21,13 @@ const List = props => {
                 <input 
                     type="text" 
                     placeholder="Add/edit comment"
-                    value={props.updatedComment} 
+                    value={props.brewery.id.updatedComment} 
                     onChange={props.handleComment}
                 /> 
                 <button 
                     onClick={() => props.editBrewery(props.brewery.id, props.updatedComment)}>Update comment
                 </button>
+                {console.log(props.updatedComment)}
             </div>
         </div>
     );

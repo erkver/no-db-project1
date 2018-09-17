@@ -27,7 +27,8 @@ body {
 .input {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: 40vw;
   margin: 10px;
 }
 
@@ -35,7 +36,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 10px;
 }
 
 .visited-button {
@@ -68,6 +68,7 @@ input {
   color: #c1eeff;
   border: solid .5px #c1eeff;
   padding: 10px;
+  height: 30px;
 }
 
 .add-brewery-form {
