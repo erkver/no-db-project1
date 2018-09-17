@@ -5,10 +5,7 @@ import './App.css';
 import List from './components/List'
 import Input from './components/Input';
 import Form from "./components/Form";
-import Edit from "./components/Edit";
-import Button from "./components/Button";
-import beerPic from './beer-stock-pic.jpg';
-import { FaBeer } from "react-icons/fa";
+
 
 
 class App extends Component {
@@ -16,14 +13,18 @@ class App extends Component {
     super(props);
     this.state = {
       breweries: [],
-      toggle: false
+      visited: [],
+      toggle: false,
+      editComment: ""
     }
-    // this.searchBrewery = this.searchBrewery.bind(this);
     this.addBrewery = this.addBrewery.bind(this);
     this.removeBrewery = this.removeBrewery.bind(this);
     this.addBrewery = this.addBrewery.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
+    this.editBrewery = this.editBrewery.bind(this);
+    this.searchBrewery = this.searchBrewery.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.addToVisited = this.addToVisited.bind(this);
+    this.handleComment = this.handleComment.bind(this);
   }
 
   componentDidMount() {
@@ -33,16 +34,9 @@ class App extends Component {
     }).catch(err => console.log(err));
   }
 
-  // searchBrewery(searchStr) { 
-  //   axios.get(`/api/breweries?by_name=`).then(res => {
-  //     let filteredBreweries = res.data.filter(brewery => brewery.name.includes(searchStr))
-  //     this.setState({breweries: filteredBreweries});
-  //   }).catch(err => console.log(err));
-  // }
-
-  addBrewery(name, brewery_type, city, state, website_url) {
-    console.log(name, brewery_type, city, state, website_url);
-    axios.post('/api/breweries', {name, brewery_type, city, state, website_url}).then(res => {
+  addBrewery(name, brewery_type, city, state, website_url, comment) {
+    // console.log(name, brewery_type, city, state, website_url, comment);
+    axios.post('/api/breweries', {name, brewery_type, city, state, website_url, comment}).then(res => {
       console.log("res:", res);
       this.setState({breweries: res.data});
     }).catch(err => console.log(err));
@@ -56,17 +50,31 @@ class App extends Component {
   }
 
   editBrewery(id, text) {
-
+    // console.log(id, text)
+    axios.put(`/api/breweries/${id}`, {text}).then(res => {
+      this.setState({breweries: res.data, editComment: ""});
+    }).catch(err => console.log(err));
   }
 
-  toggleForm(id) {
-    let singleBrewery = this.state.breweries.filter(brewery => brewery.id === id)
-    console.log(singleBrewery, this.state.toggle);
-    this.state.toggle === true ? this.setState({breweries: singleBrewery}) : this.state.breweries;
+  searchBrewery(str) { 
+    axios.get(`/api/breweries?by_state=${str}`).then(res => {
+            // let filteredBreweries = res.data.filter(brewery => brewery.name.includes(searchStr))
+      this.setState({breweries: res.data});
+    }).catch(err => console.log(err));
   }
 
   handleToggle(){
-      this.setState({toggle: !this.state.toggle});
+    this.setState({toggle: !this.state.toggle});
+  }
+
+  addToVisited(brewery){
+    let visitedArr = this.state.visited.slice();;
+    visitedArr.push(brewery);
+    this.setState({visited: visitedArr});
+  }
+
+  handleComment(e) {
+    this.setState({editComment: e.target.value})
   }
 
   render() {
@@ -81,25 +89,54 @@ class App extends Component {
           brewery={e}
           deleteBrewery={this.removeBrewery}
           editBrewery={this.editBrewery}
-          toggleForm={this.toggleForm}
-          handleToggle={this.handleToggle}
+          addBrewery={this.addToVisited}
+          handleComment={this.handleComment}
+          updatedComment={this.state.editComment}
+        />
+      )
+      });
+    let visitedList = this.state.visited.map((e, desc, location, site) => {
+      return (
+        <List 
+          key1={desc}
+          key2={location}
+          key3={site}
+          brewery={e}
+          deleteBrewery={this.removeBrewery}
+          editBrewery={this.editBrewery}
+          addBrewery={this.addToVisited}
+          handleComment={this.handleComment}
+          updatedComment={this.state.editComment}
         />
       )
       });
     return (
       <div className="App">
         <div className="navBar">
-          <nav><h1>HopSearch</h1></nav>
           <Input 
             search={this.searchBrewery}
+            switchToVisited={this.handleToggle}
           />
-        {this.state.toggle === false ? <p id="alt">Or add a new brewery!</p> : <p id="alt">Edit brewery</p>}
+          <button className="visited-button" onClick={() => this.handleToggle()}>{this.state.toggle === false ? "View visited breweries" : "Back to list"}</button>
         </div>
-        <Form
-          addBrewery={this.addBrewery}
-          formState={this.state.toggle}
-        />
-        {breweryList}
+          <nav>
+            <h1>HopSearch</h1>
+          </nav>
+          {this.state.toggle === false ? 
+            <div className="form-container">
+            <div className="pre-body">
+              <p className="alt-text">Filter by:</p>
+              <button>State</button>
+            </div>
+            <p 
+              className="alt-text">or add a new brewery!</p>
+            <Form
+              addBrewery={this.addBrewery}
+            />
+            </div> : 
+            <p id="visited">Visited breweries</p>
+          }
+        {this.state.toggle === false ? breweryList : visitedList}
       </div>
     );
   }

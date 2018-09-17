@@ -8,13 +8,14 @@ export default class Form extends Component {
             brewery_type: "",
             city: "",
             state: "",
-            website_url: ""
+            website_url: "",
+            comment: ""
         }
         this.resetInput = this.resetInput.bind(this);
     }
 
     resetInput() {
-        this.setState({name: "", brewery_type: "", city: "", state: "", website_url: ""});
+        this.setState({name: "", brewery_type: "", city: "", state: "", website_url: "", comment: ""});
     }
 
     render() {
@@ -50,19 +51,16 @@ export default class Form extends Component {
                         value={this.state.website_url} 
                         onChange={(e) => this.setState({website_url: e.target.value})}
                     /> 
+                    <input 
+                        type="text" 
+                        placeholder="Add comment/note" 
+                        value={this.state.comment} 
+                        onChange={(e) => this.setState({comment: e.target.value})}
+                    /> 
                 </form>
-                {this.props.formState === false ?
                 <button
-                    onClick={() => {this.props.addBrewery(this.state.name, this.state.brewery_type, this.state.city, this.state.state, this.state.website_url); this.resetInput()}}>Add Brewery
+                    onClick={() => {this.props.addBrewery(this.state.name, this.state.brewery_type, this.state.city, this.state.state, this.state.website_url, this.state.comment); this.resetInput()}}>Add Brewery!
                 </button>
-                :
-                <button
-                    onClick={() => 
-                    {this.props.editBrewery(this.state.name, this.state.brewery_type, this.state.city, this.state.state, this.state.website_url); 
-                    this.resetInput()
-                    }}>Confirm edit
-                </button>
-                }
             </div>
         );
     }

@@ -17,17 +17,52 @@ body {
 
 .navBar {
   display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 10vh;
+  position: relative;
+  margin: auto;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.visited-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 20px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 150px;
+  height: 35vh;
+}
+
+.pre-body {
+  display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  font-size: 150px;
-  height: 60vh;
+  height: 15vh;
   position: relative;
 }
 
 input {
-  width: 20vw;
-  height: 5vh;
   border-radius: 10px;
   background-color: #655356;
   color: #c1eeff;
@@ -39,20 +74,17 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  height: 10vh;
+  flex-direction: column;
+  height: 15vh;
+  margin-bottom: 20px;
 }
 
-.input {
+form {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-}
-
-.search-button {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px;
+  width: 75vw;
+  margin: 10px;
 }
 
 button {
@@ -63,6 +95,15 @@ button {
   color: #655356;
   border: solid .5px #c1eeff;
 }
+
+button:hover {
+  cursor: pointer;
+  background-color: #655356;
+  color: #c1eeff;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+}
+
 .App {
   text-align: center;
 }
@@ -73,8 +114,17 @@ button {
   justify-content: space-evenly;
   flex-direction: column;
   position: relative;
-  width: 30%;
+  width: 32%;
   margin: 10px;
+  border: 2px solid #c1eeff;
+  padding: 10px;
+}
+
+.list-container:hover {
+  background-color: #513b3c;
+  color: #c1eeff;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.2s;
 }
 
 .list {
@@ -84,18 +134,46 @@ button {
   position: relative;
 }
 
+.list-buttons {
+  margin: 10px;
+  width: 15vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.edit-comment {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 20vw;
+}
+
+#visited {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  font-size: 36px;
+  text-transform: uppercase;
+}
+
 img {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   position: relative;
-  width: 50%;
-  margin: 5px;
+  width: 65%;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
-
-#alt {
-  font-size: 40px;
+.alt-text {
+  font-size: 24px;
   text-transform: uppercase;
+}
+
+.add-btn:visited {
+  background-color: #28231c;
 }
 

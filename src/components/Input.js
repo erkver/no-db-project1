@@ -1,6 +1,7 @@
 import React,{ Component } from "react";
 import '../App.css';
 import Button from "./Button";
+import axios from "axios";
 
 class Input extends Component {
     constructor(props) {
@@ -21,11 +22,12 @@ class Input extends Component {
         this.props.search(this.state.userInput);
     }
 
+
     render() {
         return (
             <div className="input">
                 <input 
-                    placeholder="Find a brewery" 
+                    placeholder="Find a brewery by state" 
                     value={this.state.userInput} 
                     onChange={this.handleChange}
                 />
